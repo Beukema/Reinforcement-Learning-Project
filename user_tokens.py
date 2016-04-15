@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3
-from enum import Enum
+from enum import IntEnum
 
-class UserTokens(Enum):
+class UserTokens(IntEnum):
     available = -1
     O = 0
     X = 1
