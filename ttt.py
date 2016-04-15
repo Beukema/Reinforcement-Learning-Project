@@ -1,3 +1,6 @@
+#!/usr/local/bin/python3
+import numpy as np
+
 class Board(object):
 
     def __init__(self):
