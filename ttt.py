@@ -9,13 +9,48 @@ class Board(object):
         self._create_board_()
 
     def game_status(self):
-        pass
+        board = np.array(self.Board)
+        for r in range(3):
+            row = board[r]
+            column = board[:,r]
+            if np.all(row == user.X):
+                return user.X
+            if np.all(row == user.O):
+                return user.O
+            if np.all(column == user.X):
+                return user.X
+            if np.all(column == user.O):
+                return user.O
+
+        diagonal = np.diagonal(board)
+
+
+        if np.all(diagonal == user.O):
+            return user.O
+
+        if np.all(diagonal == user.X):
+            return user.X
+
+        board_flip =  np.fliplr(board)
+        reverse_diagonal = np.diagonal(board_flip)
+
+        if np.all(reverse_diagonal == user.O):
+            return user.O
+
+        if np.all(reverse_diagonal == user.X):
+            return user.X
+
+        return user.available
+
 
     def take_space(self, user, space):
-        pass
+        board = np.array(self.Board).flatten()
+        board[space] = user
+        self.Board = board.reshape(3,3)
 
     def open_space(self, space):
-        pass
+        board = np.array(self.Board).flatten().tolist()
+        return user.available == board[space]
 
     def reset_game(self):
         self._create_board_()
@@ -25,7 +60,6 @@ class Board(object):
         spaces = []
         board = self.Board.flatten()
         for space in np.nditer(board):
-            print(space)
             if space == -1:
                 spaces.append(count)
             count += 1
@@ -37,10 +71,3 @@ class Board(object):
         self.Board = np.matrix([[user.available, user.available, user.available],
             [user.available, user.available, user.available],
             [user.available, user.available, user.available]])
-
-        print(self.Board)
-
-if __name__ == '__main__':
-    b = Board()
-    s = b.available_spaces()
-    print(s.all())

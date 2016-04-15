@@ -31,10 +31,28 @@ class BoardTest(unittest.TestCase):
                          'incorrect default board setup')
 
     def test_game_status(self):
+        self.Board.Board = np.matrix('0 0 0; -1 -1 -1; -1 -1 -1')
         status = self.Board.game_status()
-        self.assertEqual(-1,status)
+        self.assertEqual(0,status)
+
+        self.Board.Board = np.matrix('-1 -1 0; -1 -1 0; -1 -1 0')
+        status = self.Board.game_status()
+        self.assertEqual(0,status)
+
+        self.Board.Board = np.matrix('1 1 1; -1 -1 -1; -1 -1 -1')
+        status = self.Board.game_status()
+        self.assertEqual(1,status)
+
+        self.Board.Board = np.matrix('0 -1 -1; -1 0 -1; -1 -1 0')
+        status = self.Board.game_status()
+        self.assertEqual(0,status)
+
+        self.Board.Board = np.matrix('-1 -1 0; -1 0 0; -1 -1 0')
+        status = self.Board.game_status()
+        self.assertEqual(0,status)
         # self.assertEqual(self.Board.Board.all(), np.matrix('-1 -1 -1; -1 -1 -1; -1 -1 -1').all(),
         #                  'incorrect default board setup')
+        self.Board.Board = np.matrix('-1 -1 -1; -1 -1 -1; -1 -1 -1')
 
 if __name__ == '__main__':
     unittest.main()
