@@ -2,6 +2,6 @@
 from enum import Enum
 
 class UserTokens(Enum):
-    open = -1
+    available = -1
     O = 0
     X = 1
