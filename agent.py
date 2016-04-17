@@ -1,4 +1,5 @@
 import random
+from user_tokens import UserTokens as user
 
 class Agent(object):
 
@@ -16,7 +17,9 @@ class Agent(object):
         # Define what token this agent plays as
         self.token = user_token
 
-    def make_move(self, board):
-        spaces = board.available_spaces
-        
+        # Keep track of last state the agent saw
+        self.prev_state = None
+
+    def next_move(self, board):
+        spaces = board.available_spaces()
         return random.choice(spaces)

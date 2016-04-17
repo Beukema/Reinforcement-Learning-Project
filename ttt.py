@@ -8,7 +8,52 @@ class Board(object):
         self.Board = None
         self._create_board_()
 
+    def tokenize(self):
+        board = np.array(self.Board)
+
+        printout = ""
+
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] == user.X:
+                    printout += "X"
+                elif board[i][j] == user.O:
+                    printout += "O"
+                else:
+                    printout += "-"
+
+        return printout
+
+
+
+
+    def print_board(self):
+        board = np.array(self.Board)
+
+        printout = ""
+
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] == user.X:
+                    printout += "X"
+                elif board[i][j] == user.O:
+                    printout += "O"
+                else:
+                    printout += " "
+
+                if j is not 2:
+                    printout += "|"
+
+            if i is not 2:
+                printout += "\n-----\n"
+
+        return printout
+
+
     def game_status(self):
+        if len(self.available_spaces()) == 0:
+            return user.draw
+
         board = np.array(self.Board)
         for r in range(3):
             row = board[r]

@@ -3,6 +3,10 @@ from Player import Player
 from ttt import Board
 
 class RandomPlayer(Player):
+
+    def __init__(self, token):
+        self.token = token
+    
     def next_move(self, board):
         return choice(board.available_spaces())
 
