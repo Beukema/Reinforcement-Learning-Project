@@ -19,7 +19,7 @@ class Agent(object):
 
         self.winning_value = 1
         self.available_value = .5
-        self.losing_value = 0
+        self.losing_value = -.5
 
         # Keep track of last state the agent saw
         self.last_state = None
@@ -28,6 +28,9 @@ class Agent(object):
     def choose_random(self, board):
         spaces = board.available_spaces()
         return random.choice(spaces)
+
+    def set_user(self, user):
+        self.token = user
 
     def get_value_of_board(self, board):
         tokenized = board.tokenize()
