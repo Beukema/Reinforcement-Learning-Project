@@ -26,6 +26,19 @@ class Board(object):
 
 
 
+    def set_board_from_string(self, string):
+        board = np.array(self.Board).flatten()
+
+        for i in range(9):
+            if string[i] is "X":
+                board[i] = user.X
+            elif string[i] is "O":
+                board[i] = user.O
+            else:
+                board[i] = user.available
+
+        self.Board = board.reshape(3,3)
+
 
     def print_board(self):
         board = np.array(self.Board)

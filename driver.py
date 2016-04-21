@@ -41,7 +41,14 @@ def play_games(a1, a2, count, verbose=False):
 
 a1 = Agent(user.X)
 a2 = RandomPlayer(user.O)
-stats = play_games(a1,a2, 500)
+a3 = Agent(user.O)
+stats = play_games(a1,a2, 1000)
+
+print("X: {}".format(stats[user.X]))
+print("O: {}".format(stats[user.O]))
+print("D: {}".format(stats[user.draw]))
+
+stats = play_games(a1,a3, 500)
 
 print("X: {}".format(stats[user.X]))
 print("O: {}".format(stats[user.O]))
