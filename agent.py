@@ -9,7 +9,9 @@ class Agent(object):
         self.move_values = {}
 
         # Random Rate: How often the agent will explore
-        self.epsilon = .1
+        self.epsilon = .5
+
+        self.moves_taken = 0
 
         # Discount Factor
         self.gamma = .9
@@ -17,13 +19,19 @@ class Agent(object):
         # Define what token this agent plays as
         self.token = user_token
 
-        self.winning_value = 1
-        self.available_value = .5
-        self.losing_value = -.5
+        self.winning_value = 3
+        self.available_value = .1
+        self.draw_value = -1
+        self.losing_value = -2
 
         # Keep track of last state the agent saw
         self.last_state = None
         self.last_value = 0
+
+
+
+    def set_learn_rate(self, rate):
+        self.epsilon = rate
 
     def choose_random(self, board):
         spaces = board.available_spaces()
@@ -45,10 +53,15 @@ class Agent(object):
             self.move_values[key] = self.winning_value
         elif game_status == user.available:
             self.move_values[key] = self.available_value
+        elif game_status == user.draw:
+            self.move_values[key] = self.draw_value
         else:
             self.move_values[key] = self.losing_value
 
     def next_move(self, board):
+
+        # if self.moves_taken % 200 == 0:
+        #     self.epsilon *= .9
 
         # Keep track of state before
         self.last_state = board.tokenize()
@@ -86,4 +99,5 @@ class Agent(object):
             if self.last_state is not None:
                 self.move_values[self.last_state] += self.gamma * (highest_value_of_move - self.last_value)
 
+            self.moves_taken += 1
             return highest_move
