@@ -60,8 +60,7 @@ class Board(object):
 
 
     def game_status(self):
-        if len(self.available_spaces()) == 0:
-            return user.draw
+
 
         # Check for rows and columns
         for i in range(3):
@@ -75,6 +74,9 @@ class Board(object):
             return self.Board[0][0]
         elif self.Board[0][2] is not user.available and self.Board[0][2] == self.Board[1][1] and self.Board[1][1] == self.Board[2][0]:
             return self.Board[0][2]
+
+        if len(self.available_spaces()) == 0:
+            return user.draw
 
         return user.available
 
