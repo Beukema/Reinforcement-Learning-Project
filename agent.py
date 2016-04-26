@@ -4,6 +4,9 @@ from user_tokens import UserTokens as user
 class Agent(object):
 
     def __init__(self, user_token):
+        '''
+            Implementation of reinforced learning
+        '''
 
         # A dictionary mapped as state => value
         self.move_values = {}
@@ -31,22 +34,37 @@ class Agent(object):
 
 
     def set_learn_rate(self, rate):
+        '''
+            Public setter for learn rate
+        '''
         self.epsilon = rate
 
     def choose_random(self, board):
+        '''
+            random choice n board
+        '''
         spaces = board.available_spaces()
         return random.choice(spaces)
 
     def set_user(self, user):
+        '''
+            sets the user token
+        '''
         self.token = user
 
     def get_value_of_board(self, board):
+        '''
+            Get the vale of the move
+        '''
         tokenized = board.tokenize()
         if not tokenized in self.move_values:
             self.add_key(board, tokenized)
         return self.move_values[tokenized]
 
     def add_key(self, board, key):
+        '''
+            check the move status
+        '''
         game_status = board.game_status()
 
         if game_status == self.token:
@@ -59,7 +77,9 @@ class Agent(object):
             self.move_values[key] = self.losing_value
 
     def next_move(self, board):
-
+        '''
+            Decide the net move base on reinforcement learning
+        '''
         # if self.moves_taken % 200 == 0:
         #     self.epsilon *= .9
 

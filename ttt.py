@@ -3,12 +3,18 @@ import numpy as np
 from user_tokens import UserTokens as user
 
 class Board(object):
+    '''
+        Board object that the users interact with
+    '''
 
     def __init__(self):
         self.Board = None
         self._create_board_()
 
     def tokenize(self):
+        '''
+            Change from token to string
+        '''
         board = np.array(self.Board)
 
         printout = ""
@@ -27,6 +33,9 @@ class Board(object):
 
 
     def set_board_from_string(self, string):
+        '''
+            Convert string to token on the board
+        '''
         board = np.array(self.Board).flatten()
 
         for i in range(9):
@@ -41,6 +50,9 @@ class Board(object):
 
 
     def print_board(self):
+        '''
+            Prints the board
+        '''
         board = np.array(self.Board)
 
         printout = ""
@@ -64,6 +76,9 @@ class Board(object):
 
 
     def game_status(self):
+        '''
+            Checks for a winner of the game
+        '''
         if len(self.available_spaces()) == 0:
             return user.draw
 
@@ -102,18 +117,30 @@ class Board(object):
 
 
     def take_space(self, user, space):
+        '''
+            puts the player on the board
+        '''
         board = np.array(self.Board).flatten()
         board[space] = user
         self.Board = board.reshape(3,3)
 
     def open_space(self, space):
+        '''
+            Check if space is open
+        '''
         board = np.array(self.Board).flatten().tolist()
         return user.available == board[space]
 
     def reset_game(self):
+        '''
+            Clears the board.
+        '''
         self._create_board_()
 
     def available_spaces(self):
+        '''
+            Returns all available spaces
+        '''
         count = 0
         spaces = []
         board = self.Board.flatten()
@@ -126,6 +153,9 @@ class Board(object):
 
 
     def _create_board_(self):
+        '''
+            Private method sets the board to available.
+        '''
         self.Board = np.matrix([[user.available, user.available, user.available],
             [user.available, user.available, user.available],
             [user.available, user.available, user.available]])

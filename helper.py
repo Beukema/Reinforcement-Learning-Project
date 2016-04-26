@@ -3,9 +3,14 @@ import numpy as np
 from user_tokens import UserTokens as user
 
 class Helper():
-
+'''
+    Static helper functions
+'''
     @staticmethod
     def board_status(b):
+        '''
+            Checks for a winner of the game.
+        '''
         board = np.array(b)
         for r in range(3):
             row = board[r]
