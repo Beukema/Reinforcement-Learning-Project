@@ -1,9 +1,14 @@
 class Manual(object):
-
+    '''
+        Playing the game verse the learner
+    '''
     def __init__(self, token):
         self.token = token
 
     def next_move(self, board):
+        '''
+            Waits for input from user.
+        '''
         need_move = True
         move = -1
 

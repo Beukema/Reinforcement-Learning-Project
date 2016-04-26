@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 
 
 def play_game(a1, a2, verbose=False):
+    '''
+        This method plays a game and checks for a winner
+    '''
     board = Board()
     players = [a1,a2]
     turns = 0
@@ -29,6 +32,11 @@ def play_game(a1, a2, verbose=False):
 
 
 def play_games(a1, a2, count, verbose=False, figure_name = 'default.png'):
+    '''
+        The method plays many games and displays graphs of the different
+        winners.
+    '''
+
 
     stats = {
         user.X: 0,
@@ -38,34 +46,53 @@ def play_games(a1, a2, count, verbose=False, figure_name = 'default.png'):
     output_x = []
     output_y = []
     output_d = []
+    poutput_x = []
+    poutput_y = []
+    poutput_d = []
+
     for i in range(count):
         board = play_game(a1,a2, verbose)
 
         stats[board.game_status()] += 1
 
         if i % 10 == 0:
-            # print("output x")
+
             output_x.append(stats[user.X])
             output_y.append(stats[user.O])
             output_d.append(stats[user.draw])
+            total = stats[user.X] + stats[user.O] + stats[user.draw]
+            print(stats[user.X]/total)
+            poutput_x.append(stats[user.X]/total)
+            poutput_y.append(stats[user.O]/total)
+            poutput_d.append(stats[user.draw]/total)
 
-        if i != 0 and i % 1000 == 0:
-            print(i)
+    # l1, = plt.plot(output_x, label='X Wins', linewidth=2)
+    # l2, = plt.plot(output_y, label='Y Wins', linewidth=2)
+    # ld, = plt.plot(output_d, label='draws', linewidth=2)
+    # plt.legend(handles=[l1,l2,ld])
+    # plt.ylabel('Tic Tac Toe Results')
+    # plt.savefig(figure_name)
 
-    l1, = plt.plot(output_x, label='X Wins', linewidth=2)
-    l2, = plt.plot(output_y, label='Y Wins', linewidth=2)
-    ld, = plt.plot(output_d, label='draws', linewidth=2)
-    plt.legend(handles=[l1,l2,ld])
-    plt.ylabel('Tic Tac Toe Results')
-    plt.savefig(figure_name)
+    pl1, = plt.plot(poutput_x, label='X', linewidth=2)
+    pl2, = plt.plot(poutput_y, label='Y', linewidth=2)
+    pld, = plt.plot(poutput_d, label='draws', linewidth=2)
+    plt.legend(handles=[pl1,pl2,pld])
+    plt.ylabel('Tic Tac Toe Win Percentages')
+    plt.savefig('percentage' + figure_name)
     return stats
 
 def print_stats(stats):
+    '''
+        This method prints the players statistics
+    '''
     print("X: {}".format(stats[user.X]))
     print("O: {}".format(stats[user.O]))
     print("D: {}".format(stats[user.draw]))
 
 def create_bar_graph(stats, filename):
+    '''
+        This method creats the bar graph showing the results for X, O, draw
+    '''
     fig, ax = plt.subplots()
     width = 1/1.5
     y = [stats[user.X],stats[user.O],stats[user.draw]]

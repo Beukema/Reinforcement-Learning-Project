@@ -1,7 +1,9 @@
 from user_tokens import UserTokens as user
 
 class Board(object):
-
+'''
+    Removes numpy to increase speed
+'''
     def __init__(self):
         self.Board = None
         self._create_board_()
