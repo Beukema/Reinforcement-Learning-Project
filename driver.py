@@ -1,9 +1,9 @@
 import pdb
 from ttt2 import Board
-from agent import Agent
+from agent2 import Agent
 from RandomPlayer import RandomPlayer
 from user_tokens import UserTokens as user
-from helper import Helper
+# from helper import Helper
 from manual import Manual
 import matplotlib.pyplot as plt
 
@@ -21,6 +21,9 @@ def play_game(a1, a2, verbose=False):
             print(board.print_board())
             print("\n\n")
             pdb.set_trace()
+
+    a1.end_game(board)
+    a2.end_game(board)
 
     return board
 
@@ -41,10 +44,13 @@ def play_games(a1, a2, count, verbose=False, figure_name = 'default.png'):
         stats[board.game_status()] += 1
 
         if i % 10 == 0:
-            print("output x")
+            # print("output x")
             output_x.append(stats[user.X])
             output_y.append(stats[user.O])
             output_d.append(stats[user.draw])
+
+        if i != 0 and i % 1000 == 0:
+            print(i)
 
     l1, = plt.plot(output_x, label='X Wins', linewidth=2)
     l2, = plt.plot(output_y, label='Y Wins', linewidth=2)
@@ -78,21 +84,43 @@ def create_bar_graph(stats, filename):
 
 a1 = Agent(user.X)
 a2 = RandomPlayer(user.O)
-a3 = Agent(user.X)
+a3 = Agent(user.O)
 
 a4 = RandomPlayer(user.X)
 a5 = Agent(user.O)
 
-manual = Manual(user.X)
-stats = play_games(a1, a2, 2000, figure_name = 'AgentX_RandY.png')
+manual = Manual(user.O)
+stats = play_games(a1, a2, 100000, figure_name = 'AgentX_RandY.png')
 create_bar_graph(stats, 'agent_rand.png')
 print_stats(stats)
+
+a1.set_learn_rate(0)
+
+stats = play_games(a4, a3, 100000, figure_name = 'AgentX_RandY2.png')
+create_bar_graph(stats, 'agent_rand2.png')
+print_stats(stats)
+
+a3.set_learn_rate(0)
+
+stats = play_games(a1, a3, 10000, figure_name = 'AgentX_RandY3.png')
+create_bar_graph(stats, 'agent_rand3.png')
+print_stats(stats)
+
+
 
 # print_stats(play_games(a1, a5, 20000))
 # print_stats(play_games(a4, a5, 20000))
 
-a1.set_learn_rate(0)
-a5.set_learn_rate(0)
+# a1.set_learn_rate(0.05)
+#
+#
+# stats = play_games(a1, a2, 10000, figure_name = 'AgentX_RandY2.png')
+# create_bar_graph(stats, 'agent_rand2.png')
+# print_stats(stats)
+
+# a5.set_learn_rate(0)
+
+
 
 # print_stats(play_games(a1, a5, 3, True))
 # print_stats(play_games(manual, a5, 3))

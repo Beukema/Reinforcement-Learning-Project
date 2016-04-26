@@ -18,3 +18,6 @@ class Manual(object):
                 print("That space is not available")
 
         return move
+
+    def end_game(self, board):
+        pass
