@@ -1,18 +1,14 @@
 from random import choice
 from Player import Player
-# from ttt import Board
 
+# Implementation of random player
 class RandomPlayer(Player):
-'''
-    Implementation of random player
-'''
+
     def __init__(self, token):
         self.token = token
 
+	# The random next move
     def next_move(self, board):
-        '''
-            The random next move
-        '''
         return choice(board.available_spaces())
 
     def end_game(self, board):

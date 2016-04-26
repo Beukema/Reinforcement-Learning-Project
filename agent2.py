@@ -3,6 +3,7 @@ from user_tokens import UserTokens as user
 
 class Agent(object):
 
+	# Implementation of reinforced learning
     def __init__(self, user_token):
 
         # A dictionary mapped as state => value
@@ -31,26 +32,32 @@ class Agent(object):
         self.move_record = []
 
 
-
+	# Public setter for learn rate
     def set_learn_rate(self, rate):
         self.epsilon = rate
 
+	# random choice in board
     def choose_random(self, board):
         spaces = board.available_spaces()
         return random.choice(spaces)
 
+	# Switches the user's token
     def set_user(self, user):
         self.token = user
 
+	# Passes command off to next method
     def get_value_of_board(self, board):
         tokenized = board.tokenize()
         return self.get_value_of_board_from_state(tokenized, board)
 
+	# Based on the state, the value is checked, if not present in
+	# repository then it is created
     def get_value_of_board_from_state(self, state, board):
         if not state in self.move_values:
             self.add_key(board, state)
         return self.move_values[state]
 
+	# Sets values for different states of the board
     def add_key(self, board, key):
         game_status = board.game_status()
 
@@ -63,8 +70,11 @@ class Agent(object):
         else:
             self.move_values[key] = self.losing_value
 
+	# Agents move process
     def next_move(self, board):
 
+		# Added later, gives the agent a gradual increase in
+		# performance
         if self.moves_taken % 1000 == 0:
             self.epsilon *= .9
 
@@ -125,6 +135,7 @@ class Agent(object):
         self.back_propogate()
         self.move_record = []
 
+	# Takes all moves performed and propagates the values back 
     def back_propogate(self):
 
         last_value = 0
